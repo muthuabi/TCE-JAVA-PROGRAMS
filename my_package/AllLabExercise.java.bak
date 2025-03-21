@@ -1,0 +1,29 @@
+//package my_package;
+import java.util.*;
+class NumberFunctions
+{
+	int number;
+	Scanner sc;
+	public NumberFunctions()
+	{
+		sc=new Scanner(System.in);
+	}
+	public void addTwo()
+	{
+		System.out.print(sc);
+		int x=this.sc.nextInt();
+		int y=this.sc.nextInt();
+		System.out.printf("Sum of %d and %d is %d",x,y,x+y);
+	}
+	public void helloWorld(String name)
+	{
+		System.out.println("Hello World "+name);
+	}
+}
+public class AllLabExercise {
+	public static void main(String[] args) {
+		NumberFunctions num=new NumberFunctions();
+		num.addTwo();
+	}
+
+}
