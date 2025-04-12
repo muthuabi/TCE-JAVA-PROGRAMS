@@ -1,4 +1,4 @@
-//package lab_ex8;
+package lab_ex8;
 import java.util.*;
 abstract class User
 {

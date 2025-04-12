@@ -1,0 +1,45 @@
+//package testing_purpose;
+import java.io.*;
+import java.net.*;
+
+public class FileServer {
+    public static void main(String[] args) {
+        int port = 8000;
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Server is running...");
+
+            while (true) {
+                Socket socket = serverSocket.accept();
+                System.out.println("Client connected.");
+
+                DataInputStream dis = new DataInputStream(socket.getInputStream());
+                String fileName = dis.readUTF();
+
+                File file = new File(fileName);
+                System.out.println("Requested File:"+fileName);
+                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+
+                if (file.exists()) {
+                    dos.writeBoolean(true);
+                    FileInputStream fis = new FileInputStream(file);
+                    byte[] buffer = new byte[4096];
+
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) > 0) {
+                        dos.write(buffer, 0, bytesRead);
+                    }
+                    fis.close();
+                    System.out.println("File sent.");
+                } else {
+                    dos.writeBoolean(false);
+                    System.out.println("File not found.");
+                }
+
+                socket.close();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}

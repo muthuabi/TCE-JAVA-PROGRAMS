@@ -7,7 +7,7 @@ class FraudAnalyzer {
             System.out.println("No transactions found.");
             return;
         }
-
+ 
         System.out.println("\n--- Fraud Report for " + accountId + " ---");
         for (String method : t.attempts.keySet()) {
             int fail = t.attempts.get(method);
