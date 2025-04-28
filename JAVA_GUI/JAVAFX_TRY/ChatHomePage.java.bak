@@ -1,0 +1,77 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+public class ChatHomePage extends Application {
+
+    private TextArea messageArea;
+    private TextField inputField;
+    private Button sendButton;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Main layout
+        VBox mainLayout = new VBox(10);
+        mainLayout.setAlignment(Pos.CENTER);
+        mainLayout.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 20px;");
+
+        // Title
+        Label titleLabel = new Label("Welcome to the Chat Room!");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
+        // Message area to display chat messages
+        messageArea = new TextArea();
+        messageArea.setEditable(false);
+        messageArea.setWrapText(true);
+        messageArea.setStyle("-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #cccccc;");
+        messageArea.setPrefHeight(300);
+
+        // Input field for the user to type a new message
+        inputField = new TextField();
+        inputField.setPromptText("Type your message...");
+        inputField.setStyle("-fx-font-size: 14px;");
+
+        // Send button to send messages
+        sendButton = new Button("Send");
+        sendButton.setStyle("-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+        
+        // Handling button click event
+        sendButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                sendMessage();
+            }
+        });
+
+        // Adding components to the main layout
+        mainLayout.getChildren().addAll(titleLabel, messageArea, inputField, sendButton);
+
+        // Creating and setting up the scene
+        Scene scene = new Scene(mainLayout, 500, 400);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Message Broadcasting");
+        primaryStage.show();
+    }
+
+    private void sendMessage() {
+        String message = inputField.getText().trim();
+        if (!message.isEmpty()) {
+            // Add the message to the chat display area
+            messageArea.appendText("You: " + message + "\n");
+
+            // Logic to send the message to other clients via server goes here.
+
+            // Clear the input field
+            inputField.clear();
+        }
+    }
+}
